@@ -1,5 +1,4 @@
-# Merges any number of local files / youtube videos into a new file
-
+#!/usr/bin/env python 
 import sys
 import os
 import random
