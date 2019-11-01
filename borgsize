@@ -15,6 +15,7 @@ archivenames = [a[0] for a in archives]
 
 sizes = []
 for a in archivenames:
+	print("Analyzing archive",a)
 	info = os.popen("borg info " + repo + "::" + a).read()
 	info = info.split("\n")
 	info = [line for line in info if line.startswith("This archive:")][0]

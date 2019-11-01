@@ -7,6 +7,8 @@ from send2trash import send2trash
 vids = sys.argv[1:-1]
 out = sys.argv[-1]
 
+assert not os.path.exists(out)
+
 files = []
 
 rand = random.randrange(100000000,999999999)
@@ -22,7 +24,7 @@ for v in vids:
 		filename = rand + "_" + str(i)
 		cmd = "youtube-dl -o \"" + filename + ".%(ext)s\" --merge-output-format mkv " + v
 		print("Command",cmd)
-		os.system(cmd)
+		assert 0 == os.system(cmd)
 		files.append(filename + ".mkv")
 		
 	i += 1
@@ -31,7 +33,7 @@ for v in vids:
 with open(rand + "_file.txt","w") as fil:
 	fil.write("\n".join("file '" + f + "'" for f in files))
 	
-os.system("ffmpeg -f concat -safe 0 -i " + rand + "_file.txt -c copy " + out)
+assert 0 == os.system("ffmpeg -f concat -safe 0 -i " + rand + "_file.txt -c copy " + out)
 os.remove(rand + "_file.txt")
 
 for f in files:
