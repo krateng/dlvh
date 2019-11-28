@@ -1,12 +1,14 @@
-#!/usr/bin/env python 
 import sys
 import os
 import random
 from send2trash import send2trash
+from doreah.control import mainfunction
 
-def main():
-	vids = sys.argv[1:-1]
-	out = sys.argv[-1]
+
+@mainfunction({})
+def main(*args):
+	vids = args[0:-1]
+	out = args[-1]
 
 	assert not os.path.exists(out)
 
@@ -27,13 +29,13 @@ def main():
 			print("Command",cmd)
 			assert 0 == os.system(cmd)
 			files.append(filename + ".mkv")
-			
+
 		i += 1
 
-			
+
 	with open(rand + "_file.txt","w") as fil:
 		fil.write("\n".join("file '" + f + "'" for f in files))
-		
+
 	assert 0 == os.system("ffmpeg -f concat -safe 0 -i " + rand + "_file.txt -c copy " + out)
 	os.remove(rand + "_file.txt")
 

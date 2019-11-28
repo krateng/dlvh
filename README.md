@@ -1,3 +1,5 @@
+Install with `pip install yeonji`
+
 # borgsize
 
 Lists sizes of all backups in a borg repository. Type `borgsize *repopath*`, e.g. `borgsize ~/myrepos/coolrepo`.

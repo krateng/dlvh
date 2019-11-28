@@ -1,13 +1,13 @@
-#!/usr/bin/env python 
-
 import sys
 import os
 import re
 import tabulate
+from doreah.control import mainfunction
 
-def main():
+@mainfunction({})
+def main(*args):
 
-	repo = sys.argv[1]
+	repo = args[0]
 
 	archivelist = os.popen("borg list " + repo).read()
 
@@ -23,5 +23,5 @@ def main():
 		info = [line for line in info if line.startswith("This archive:")][0]
 		_, origsize, compressedsize, dedupsize = re.split(r'\s{2,}', info)
 		sizes.append([a,origsize,compressedsize,dedupsize])
-		
+
 	print(tabulate.tabulate(sizes,headers=["Archive","Original Size","Compressed Size","Deduplicated Size"]))

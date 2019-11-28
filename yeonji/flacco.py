@@ -1,25 +1,26 @@
-#!/usr/bin/env python
-
 import sys
 import os
 import re
+from doreah.control import mainfunction
 
-def main():
-	if (len(sys.argv) < 3):
+
+@mainfunction({})
+def main(*args):
+	if (len(args) < 2):
 		print("You need to specify a number and a title, son!")
 		exit()
 
 	try:
-		num = int(sys.argv[1])
+		num = int(args[0])
 	except:
 		print("That doesn't look like a valid number.")
 		exit()
 
-	if (" " in sys.argv[2]):
-		title = sys.argv[2]	#if something was given in parantheses, it's probably meant to be the title even if there are more arguemnts
+	if (" " in args[1]):
+		title = args[1]	#if something was given in parantheses, it's probably meant to be the title even if there are more arguemnts
 	else:
-		title = " ".join(sys.argv[2:])
-		
+		title = " ".join(args[1:])
+
 	convert = False
 
 	if (os.path.exists("track" + str(num) + ".cdda.flac")):
@@ -31,8 +32,8 @@ def main():
 	elif (os.path.exists("track00" + str(num) + ".cdda.flac")):
 		filename = "track00" + str(num) + ".cdda.flac"
 		numstr = "00" + str(num)
-		
-		
+
+
 	elif (os.path.exists("track" + str(num) + ".cdda.wav")):
 		filename = "track" + str(num) + ".cdda.wav"
 		numstr = str(num)
@@ -45,10 +46,10 @@ def main():
 		filename = "track00" + str(num) + ".cdda.wav"
 		numstr = "00" + str(num)
 		convert = True
-		
 
-		
-		
+
+
+
 	else:
 		print("File could not be found. Are you sure you ripped this with cdparanoia?")
 		exit()
@@ -63,8 +64,8 @@ def main():
 		os.system("ffmpeg -i " + filename + " " + outputfilename)
 	else:
 		os.rename(filename,outputfilename)
-		
-		
+
+
 	print("Tagging flac file...")
 	os.system("metaflac --set-tag=TITLE='" + title + "' " + outputfilename)
 
