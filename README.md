@@ -1,6 +1,6 @@
 # borgsize
 
-Lists sizes of all backups in a borg repository. Type `borg *repopath*`, e.g. `borg ~/myrepos/coolrepo`.
+Lists sizes of all backups in a borg repository. Type `borgsize *repopath*`, e.g. `borgsize ~/myrepos/coolrepo`.
 
 # flacco
 
@@ -14,4 +14,4 @@ Merges any number of local files / youtube videos into a new file. Type `ytdlj *
 
 # me2dlc
 
-Installs ME2 DLCs from exe files on Linux using Steam Proton. Copy in directory with files, then run `me2dlc`. Requires protontricks.
+Installs ME2 DLCs from exe files on Linux using Steam Proton. Navigate to directory with files, then run `me2dlc`. Requires protontricks.
