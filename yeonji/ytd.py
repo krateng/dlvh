@@ -8,7 +8,7 @@ from . import DATA_DIR
 DATA_DIR = os.path.join(DATA_DIR,"ytd")
 settingsfile = os.path.join(DATA_DIR,"presets.yml")
 
-@mainfunction({})
+@mainfunction({},shield=True)
 def main(preset=None,url=None,new=None,path=None):
 	if new is None and path is None:
 		with open(settingsfile,"r") as f:
@@ -19,9 +19,9 @@ def main(preset=None,url=None,new=None,path=None):
 		os.system("youtube-dl " + url)
 	elif new is not None and path is not None:
 		settings = {}
+		assert os.path.exists(path)
 		with open(settingsfile,"r") as f:
 			settings = yaml.safe_load(f)
-			print(settings)
 
 		settings[new] = {"path":path}
 
@@ -30,3 +30,8 @@ def main(preset=None,url=None,new=None,path=None):
 
 	else:
 		print("You need to specify --new and --path to create a new preset!")
+
+
+def create_bash_complete():
+
+	pass

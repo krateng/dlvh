@@ -4,7 +4,7 @@ import re
 import tabulate
 from doreah.control import mainfunction
 
-@mainfunction({})
+@mainfunction({},shield=True)
 def main(*args):
 
 	repo = args[0]

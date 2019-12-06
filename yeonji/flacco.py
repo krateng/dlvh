@@ -4,7 +4,7 @@ import re
 from doreah.control import mainfunction
 
 
-@mainfunction({})
+@mainfunction({},shield=True)
 def main(*args):
 	if (len(args) < 2):
 		print("You need to specify a number and a title, son!")

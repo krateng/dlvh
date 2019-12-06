@@ -5,7 +5,7 @@ from send2trash import send2trash
 from doreah.control import mainfunction
 
 
-@mainfunction({})
+@mainfunction({},shield=True)
 def main(*args):
 	vids = args[0:-1]
 	out = args[-1]
