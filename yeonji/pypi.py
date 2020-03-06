@@ -7,7 +7,7 @@ import glob
 from doreah.control import mainfunction
 
 @mainfunction({},shield=True)
-def main(packagename):
+def main(packagename,test=False):
 
 	assert os.path.exists(packagename)
 	sys.argv = (sys.argv[0],"sdist","bdist_wheel")
@@ -56,8 +56,10 @@ def main(packagename):
 
 	os.system("git tag v" + ".".join(str(n) for n in pkginfo["version"]))
 
-
-	os.system("python3 -m twine upload --skip-existing dist/*")
+	uploadcmd = "python3 -m twine upload --skip-existing dist/*"
+	if test:
+		uploadcmd += " --repository-url https://test.pypi.org/legacy/"
+	os.system(uploadcmd)
 
 	shutil.rmtree("build")
 	shutil.rmtree("dist")
