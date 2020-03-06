@@ -12,6 +12,7 @@ os.makedirs(DATA_DIR,exist_ok=True)
 # package finder
 import pkgutil, importlib, sys, inspect
 modulenames = [modname for importer, modname, ispkg in pkgutil.iter_modules(__import__(__name__).__path__)]
+modulenames = [m for m in modulenames if not m.startswith("_")]
 #modules = {name:importlib.import_module("." + name,package=__name__) for name in modulenames}
 
 
