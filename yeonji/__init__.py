@@ -1,13 +1,3 @@
-name = "yeonji"
-author = {
-	"name":"Johannes Krattenmacher",
-	"email":"python@krateng.dev",
-	"github":"krateng"
-}
-desc = "Collection of command line tools"
-version = 0,5,0
-
-
 
 # local data
 import os
@@ -38,19 +28,3 @@ for m in modulenames:
 #	fr = inspect.stack()[1]
 #	mod = inspect.getmodule(fr[0])
 #	return os.path.join(DATA_DIR,mod.__name__)
-
-
-requires = [
-	"tabulate",
-	"send2trash"
-]
-
-resources = [
-]
-
-
-
-commands = {
-	mod:mod + ":main"
-	for mod in modulenames
-}

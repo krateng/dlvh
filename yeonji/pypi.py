@@ -2,11 +2,13 @@ import setuptools
 import importlib
 import sys
 import os
+import shutil
+import glob
 from doreah.control import mainfunction
 
 @mainfunction({},shield=True)
 def main(packagename):
-	
+
 	assert os.path.exists(packagename)
 	sys.argv = (sys.argv[0],"sdist","bdist_wheel")
 
@@ -49,3 +51,11 @@ def main(packagename):
 
 
 	os.system("git tag v" + ".".join(str(n) for n in pkginfo["version"]))
+
+
+	os.system("python3 -m twine upload --skip-existing dist/*")
+
+	shutil.rmtree("build")
+	shutil.rmtree("dist")
+	for d in glob.glob("*.egg-info"):
+		shutil.rmtree(d)
