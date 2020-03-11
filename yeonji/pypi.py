@@ -13,7 +13,7 @@ def main(packagename,test=False):
 	sys.argv = (sys.argv[0],"sdist","bdist_wheel")
 
 	# use local package!
-	sys.path = ["."] + sys.path
+	sys.path.insert(0,".")
 
 	module = importlib.import_module(packagename)
 	pkginfo = importlib.import_module(".__pkginfo__",package=packagename)
@@ -22,8 +22,16 @@ def main(packagename,test=False):
 
 	# extract info
 
-	with open("README.md", "r") as fh:
-	    long_description = fh.read()
+	readmelocs = [
+		packagename + "/README.md",
+		"README.md"
+	]
+
+	for rml in readmelocs:
+		if os.path.exists(rml):
+			with open(rml, "r") as fh:
+			    long_description = fh.read()
+			break
 
 	setuptools.setup(
 	    name=pkginfo.get("links",{}).get("pypi") or pkginfo["name"],
@@ -42,13 +50,13 @@ def main(packagename,test=False):
 	        "Operating System :: OS Independent",
 	    ],
 		python_requires=">=3.5",
-		install_requires=pkginfo["requires"],
-		package_data={'': pkginfo["resources"]},
+		install_requires=pkginfo.get("requires",[]),
+		package_data={'': pkginfo.get("resources",[])},
 		include_package_data=True,
 		entry_points = {
 			"console_scripts":[
 				cmd + " = " + pkginfo["name"] + "." + pkginfo["commands"][cmd]
-				for cmd in pkginfo["commands"]
+				for cmd in pkginfo.get("commands",[])
 			]
 		}
 	)
