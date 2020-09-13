@@ -7,12 +7,13 @@ author = {
 	"github":"krateng"
 }
 desc = "Collection of command line tools"
-version = 0,5,4
+version = 0,5,5
 
 
 requires = [
 	"tabulate",
-	"send2trash"
+	"send2trash",
+	"doreah>=1.6.11"
 ]
 
 resources = [
