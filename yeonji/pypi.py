@@ -15,7 +15,6 @@ def main(packagename,test=False):
 	# use local package!
 	sys.path.insert(0,".")
 
-	module = importlib.import_module(packagename)
 	pkginfo = importlib.import_module(".__pkginfo__",package=packagename)
 	pkginfo = pkginfo.__dict__
 
@@ -57,7 +56,8 @@ def main(packagename,test=False):
 			"console_scripts":[
 				cmd + " = " + pkginfo["name"] + "." + pkginfo["commands"][cmd]
 				for cmd in pkginfo.get("commands",[])
-			]
+			],
+			**{k:pkginfo["entrypoints"][k] for k in pkginfo["entrypoints"]}
 		}
 	)
 
