@@ -15,6 +15,7 @@ def main(preset=None,url=None,new=None,path=None):
 			settings = yaml.safe_load(f)
 
 		selected = settings[preset]
+		print("Downloading to directory",selected)
 		os.chdir(selected["path"])
 		os.system("youtube-dl " + url)
 	elif new is not None and path is not None:
