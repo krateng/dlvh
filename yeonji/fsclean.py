@@ -53,7 +53,7 @@ def cleanf(name,level):
 
 @mainfunction({},flags=["dryrun","save_log"],shield=True)
 def main(rootpath,level=3,dryrun=False,save_log=False):
-	found,changed = 0,0
+	found,changed,skipped = 0,0,0
 	renamed = []
 	for root, dirs, files in os.walk(rootpath,topdown=False):
 		for f in files+dirs:
@@ -62,17 +62,19 @@ def main(rootpath,level=3,dryrun=False,save_log=False):
 			oldname = os.path.join(root,f)
 			newname = os.path.join(root,fc)
 			if fc != f:
-				changed += 1
 				print(col["red"](oldname))
 				print(col["green"](newname))
-				renamed.append({"original":oldname,"new":newname})
-				if not dryrun:
-					if os.path.exists(newname):
-						print(newname,"already exists!")
-					else:
-						os.rename(oldname,newname)
 
-	print("Renamed",changed,"of",found,"files.")
+				if os.path.exists(newname):
+					print(newname,"already exists!")
+					skipped += 1
+				else:
+					changed += 1
+					if not dryrun: os.rename(oldname,newname)
+					renamed.append({"original":oldname,"new":newname})
+
+	if dryrun: print(changed,"offending files found. No files have been renamed.")
+	else: print("Renamed",changed,"of",found,"files, skipped",skipped)
 	if save_log:
 		with open("rename_" + nowstr + ".yml","w") as log:
 			yaml.dump(renamed,log)

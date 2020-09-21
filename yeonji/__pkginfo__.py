@@ -7,7 +7,7 @@ author = {
 	"github":"krateng"
 }
 desc = "Collection of command line tools"
-version = 0,5,6
+version = 0,5,7
 
 
 requires = [

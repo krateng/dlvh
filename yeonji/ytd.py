@@ -9,18 +9,21 @@ DATA_DIR = os.path.join(DATA_DIR,"ytd")
 settingsfile = os.path.join(DATA_DIR,"presets.yml")
 
 @mainfunction({},shield=True)
-def main(preset=None,url=None,new=None,path=None):
-	if new is None and path is None:
+def main(preset=None,url=None,new=None):
+	if new is None and preset is not None and url is not None:
 		with open(settingsfile,"r") as f:
 			settings = yaml.safe_load(f)
 
-		selected = settings[preset]
-		print("Downloading to directory",selected)
-		os.chdir(selected["path"])
-		os.system("youtube-dl " + url)
-	elif new is not None and path is not None:
+		if preset in settings:
+			selected = settings[preset]
+			print("Downloading to directory",selected["path"])
+			os.chdir(selected["path"])
+			os.system("youtube-dl " + url)
+		else:
+			print("Preset",preset,"undefined.")
+	elif new is not None:
 		settings = {}
-		assert os.path.exists(path)
+		path = os.getcwd()
 		with open(settingsfile,"r") as f:
 			settings = yaml.safe_load(f)
 
@@ -29,8 +32,10 @@ def main(preset=None,url=None,new=None,path=None):
 		with open(settingsfile,"w") as f:
 			yaml.dump(settings,f)
 
+		print("Added current directory as preset",new)
+
 	else:
-		print("You need to specify --new and --path to create a new preset!")
+		print("You need to specify --new to create a new preset!")
 
 
 def create_bash_complete():
