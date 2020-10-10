@@ -3,6 +3,7 @@ import re
 import emoji
 import string
 import unidecode
+import hashlib
 from doreah.io import col
 from doreah.control import mainfunction
 
@@ -68,6 +69,15 @@ def main(rootpath,level=3,dryrun=False,save_log=False):
 				if os.path.exists(newname):
 					print(newname,"already exists!")
 					skipped += 1
+					try:
+						for f in [oldname,newname]:
+							sha256_hash = hashlib.sha256()
+							with open(f,"rb") as fd:
+								for byte_block in iter(lambda: fd.read(4096),b""):
+									sha256_hash.update(byte_block)
+							print("Hash: " + sha256_hash.hexdigest())
+					except:
+						pass
 				else:
 					changed += 1
 					if not dryrun: os.rename(oldname,newname)
