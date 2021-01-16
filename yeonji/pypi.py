@@ -49,7 +49,7 @@ def main(packagename,test=False):
 	        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
 	        "Operating System :: OS Independent",
 	    ],
-		python_requires=">=3.5",
+		python_requires=pkginfo.get("python_version"),
 		install_requires=pkginfo.get("requires",[]),
 		package_data={'': pkginfo.get("resources",[])},
 		include_package_data=True,

@@ -28,7 +28,6 @@ customreplace = {
 # 4 - Lower Case everything
 #
 
-
 def cleanf(name,level):
 	name = " ".join(name.split())
 	name = "".join(customreplace[char] if char in customreplace else char for char in name)
@@ -88,3 +87,37 @@ def main(rootpath,level=3,dryrun=False,save_log=False):
 	if save_log:
 		with open("rename_" + nowstr + ".yml","w") as log:
 			yaml.dump(renamed,log)
+
+
+def cleandir(root,path=[],printeddepth=0):
+	abspath = os.path.join(root,*path)
+	try:
+		nodes = os.listdir(abspath)
+	except:
+		print("Cannot access",abspath)
+		return False
+	files = [n for n in nodes if os.path.isfile(os.path.join(abspath,n))]
+	subdirs = [n for n in nodes if os.path.isdir(os.path.join(abspath,n))]
+
+	changed = False
+	for d in subdirs:
+		changed = cleandir(root,path=path+[d],printeddepth=printeddepth) or changed
+		if changed: printeddepth = len(path)
+
+	for f in files:
+		fc = cleanf(f,level=level)
+		if (not changed) and fc != f:
+			changed = True
+			while printeddepth<len(path):
+				print(indent(printeddepth),path[printeddepth])
+				printeddepth += 1
+		if fc != f:
+			print(indent(printeddepth),"-",col["red"](f))
+			print(indent(printeddepth)," ",col["green"](fc))
+	#print(abspath)
+
+	return changed
+
+
+def indent(n):
+	return n * "   "
