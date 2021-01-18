@@ -7,27 +7,64 @@ from . import DATA_DIR
 
 DATA_DIR = os.path.join(DATA_DIR,"ytd")
 settingsfile = os.path.join(DATA_DIR,"presets.yml")
+configfiles = ["ytd.yaml","ytd.yml",".ytd"]
 
 @mainfunction({},shield=True)
 def main(preset=None,url=None,new=None):
 	if new is None and preset is not None and url is not None:
-		with open(settingsfile,"r") as f:
-			settings = yaml.safe_load(f)
 
-		if preset in settings:
-			selected = settings[preset]
-			print("Downloading to directory",selected["path"])
-			os.chdir(selected["path"])
-			os.system("youtube-dl " + url)
+		# no preset, dl here
+		if preset == ".":
+			folder = os.getcwd()
+			options = []
+
+		# preset
 		else:
-			print("Preset",preset,"undefined.")
+			with open(settingsfile,"r") as f:
+				settings = yaml.safe_load(f)
+
+			# abort if not existing
+			if not preset in settings:
+				print("Preset",preset,"undefined.")
+				return
+
+
+			selected = settings[preset]
+
+			folder = selected["path"]
+			options = selected["options"]
+
+
+		print("Downloading to directory",folder)
+		while True:
+			for c in configfiles:
+				local_configfile = os.path.join(folder,c)
+				try:
+					with open(local_configfile,"r") as f:
+						localsettings = yaml.safe_load(f)
+						options += localsettings["options"]
+						print("Reading settings from",local_configfile)
+				except:
+					pass
+
+			if os.path.dirname(folder) != folder:
+				folder = os.path.dirname(folder)
+			else:
+				break
+
+		os.chdir(selected["path"])
+		os.system("youtube-dl " + " ".join(options) + " " + url)
+
 	elif new is not None:
 		settings = {}
 		path = os.getcwd()
-		with open(settingsfile,"r") as f:
-			settings = yaml.safe_load(f)
+		try:
+			with open(settingsfile,"r") as f:
+				settings = yaml.safe_load(f)
+		except:
+			settings = {}
 
-		settings[new] = {"path":path}
+		settings[new] = {"path":path,"options":[]}
 
 		with open(settingsfile,"w") as f:
 			yaml.dump(settings,f)

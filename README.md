@@ -20,7 +20,7 @@ Installs ME2 DLCs from exe files on Linux using Steam Proton. Navigate to direct
 
 # ytd
 
-Quickly downloads videos to predefined locations. Use `ytd *preset* *URL*` to download and `ytd --new *preset* --path *path*` to define new preset.
+Quickly downloads videos to predefined locations. Use `ytd *preset* *URL*` to download and `ytd --new *preset*` (in the target directory) to define new preset. You can specifiy additional options in configuration files in the target folder and all its parent folders.
 
 # ytdlj
 
