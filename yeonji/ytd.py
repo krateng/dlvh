@@ -52,7 +52,7 @@ def main(preset=None,url=None,new=None):
 			else:
 				break
 
-		os.chdir(selected["path"])
+		os.chdir(folder)
 		os.system("youtube-dl " + " ".join(options) + " " + url)
 
 	elif new is not None:
