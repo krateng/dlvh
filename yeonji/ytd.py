@@ -36,9 +36,10 @@ def main(preset=None,url=None,new=None):
 
 
 		print("Downloading to directory",folder)
+		tmpfolder = folder
 		while True:
 			for c in configfiles:
-				local_configfile = os.path.join(folder,c)
+				local_configfile = os.path.join(tmpfolder,c)
 				try:
 					with open(local_configfile,"r") as f:
 						localsettings = yaml.safe_load(f)
@@ -47,8 +48,8 @@ def main(preset=None,url=None,new=None):
 				except:
 					pass
 
-			if os.path.dirname(folder) != folder:
-				folder = os.path.dirname(folder)
+			if os.path.dirname(tmpfolder) != tmpfolder:
+				tmpfolder = os.path.dirname(tmpfolder)
 			else:
 				break
 
