@@ -54,6 +54,9 @@ def main(preset=None,url=None,new=None):
 				break
 
 		os.chdir(folder)
+		print("The following options have been loaded from local configuration:")
+		for o in options:
+			print("   ",o)
 		os.system("youtube-dl " + " ".join(options) + " " + url)
 
 	elif new is not None:
