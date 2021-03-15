@@ -7,7 +7,7 @@ from . import DATA_DIR
 
 DATA_DIR = os.path.join(DATA_DIR,"ytd")
 settingsfile = os.path.join(DATA_DIR,"presets.yml")
-configfiles = ["ytd.yaml","ytd.yml",".ytd"]
+configfiles = ["ytd.yml","ytd.yaml",".ytd"]
 
 @mainfunction({},shield=True)
 def main(preset=None,url=None,new=None):
@@ -16,7 +16,8 @@ def main(preset=None,url=None,new=None):
 		# no preset, dl here
 		if preset == ".":
 			folder = os.getcwd()
-			options = []
+			options = {}
+			flags = []
 
 		# preset
 		else:
@@ -32,7 +33,8 @@ def main(preset=None,url=None,new=None):
 			selected = settings[preset]
 
 			folder = selected["path"]
-			options = selected["options"]
+			options = selected.get("options",{})
+			flags = selected.get("flags",[])
 
 
 		print("Downloading to directory",folder)
@@ -43,7 +45,8 @@ def main(preset=None,url=None,new=None):
 				try:
 					with open(local_configfile,"r") as f:
 						localsettings = yaml.safe_load(f)
-						options += localsettings["options"]
+						if "options" in localsettings: options.update(localsettings["options"])
+						if "flags" in localsettings: flags += localsettings["flags"]
 						print("Reading settings from",local_configfile)
 				except:
 					pass
@@ -54,10 +57,16 @@ def main(preset=None,url=None,new=None):
 				break
 
 		os.chdir(folder)
-		print("The following options have been loaded from local configuration:")
-		for o in options:
-			print("   ",o)
-		os.system("youtube-dl " + " ".join(options) + " " + url)
+	#	print("The following options have been loaded from local configuration:")
+	#	for o in options:
+	#		print("   ",o)
+
+		cmd_options = ["--" + k + " " + options[k] for k in options]
+		cmd_flags = ["--" + k for k in flags]
+
+		cmd = "youtube-dl " + " ".join(cmd_options) + " " + " ".join(cmd_flags) + " " + url
+		print(cmd)
+		os.system(cmd)
 
 	elif new is not None:
 		settings = {}
@@ -68,7 +77,7 @@ def main(preset=None,url=None,new=None):
 		except:
 			settings = {}
 
-		settings[new] = {"path":path,"options":[]}
+		settings[new] = {"path":path,"options":{},"flags":[]}
 
 		with open(settingsfile,"w") as f:
 			yaml.dump(settings,f)
