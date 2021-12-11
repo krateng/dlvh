@@ -47,12 +47,24 @@ def main(url=None,preset=None,new=None):
 				try:
 					with open(local_configfile,"r") as f:
 						localsettings = yaml.safe_load(f)
-						
+
+
 						# already loaded ones from lower directories take precedence
-						if "options" in localsettings: options = {**localsettings["options"],**options} 
-						if "flags" in localsettings: flags += localsettings["flags"]
+						if "options" in localsettings:
+							loc_options = localsettings["options"]
+							# adjust relative paths from settings file
+							for o in loc_options:
+								if isinstance(loc_options[o],str) and loc_options[o].startswith("^"):
+									loc_options[o] = loc_options[o].replace("^",tmpfolder)
+							options = {**loc_options,**options}
+						if "flags" in localsettings:
+							loc_flags = localsettings["flags"]
+							flags += loc_flags
+
+
+
 						print("[ytd]\t",local_configfile)
-				except:
+				except FileNotFoundError:
 					pass
 
 			if os.path.dirname(tmpfolder) != tmpfolder:
@@ -61,6 +73,8 @@ def main(url=None,preset=None,new=None):
 				break
 
 		os.chdir(folder)
+
+
 	#	print("The following options have been loaded from local configuration:")
 	#	for o in options:
 	#		print("   ",o)
