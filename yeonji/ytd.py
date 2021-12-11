@@ -8,13 +8,14 @@ from . import DATA_DIR
 DATA_DIR = os.path.join(DATA_DIR,"ytd")
 settingsfile = os.path.join(DATA_DIR,"presets.yml")
 configfiles = ["ytd.yml","ytd.yaml",".ytd"]
+processname = "yt-dlp"
 
-@mainfunction({},shield=True)
-def main(preset=None,url=None,new=None):
-	if new is None and preset is not None and url is not None:
+@mainfunction({'p':'preset','n':'new'},shield=True)
+def main(url=None,preset=None,new=None):
+	if new is None and url is not None:
 
 		# no preset, dl here
-		if preset == ".":
+		if preset is None:
 			folder = os.getcwd()
 			options = {}
 			flags = []
@@ -37,17 +38,20 @@ def main(preset=None,url=None,new=None):
 			flags = selected.get("flags",[])
 
 
-		print("Downloading to directory",folder)
+		print("[ytd] Downloading to directory",folder)
 		tmpfolder = folder
+		print("[ytd] Reading local settings...")
 		while True:
 			for c in configfiles:
 				local_configfile = os.path.join(tmpfolder,c)
 				try:
 					with open(local_configfile,"r") as f:
 						localsettings = yaml.safe_load(f)
-						if "options" in localsettings: options.update(localsettings["options"])
+						
+						# already loaded ones from lower directories take precedence
+						if "options" in localsettings: options = {**localsettings["options"],**options} 
 						if "flags" in localsettings: flags += localsettings["flags"]
-						print("Reading settings from",local_configfile)
+						print("[ytd]\t",local_configfile)
 				except:
 					pass
 
@@ -64,8 +68,8 @@ def main(preset=None,url=None,new=None):
 		cmd_options = ["--" + k + " " + options[k] for k in options]
 		cmd_flags = ["--" + k for k in flags]
 
-		cmd = "youtube-dl " + " ".join(cmd_options) + " " + " ".join(cmd_flags) + " " + url
-		print(cmd)
+		cmd = processname + " " + " ".join(cmd_options) + " " + " ".join(cmd_flags) + " " + url
+		print("[ytd] Issuing command: " + cmd)
 		os.system(cmd)
 
 	elif new is not None:

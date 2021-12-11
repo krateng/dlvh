@@ -7,7 +7,7 @@ author = {
 	"github":"krateng"
 }
 desc = "Collection of command line tools"
-version = 0,6,4
+version = 0,7,0
 
 
 requires = [
@@ -15,7 +15,8 @@ requires = [
 	"send2trash",
 	"doreah>=1.6.11",
 	"unidecode",
-	"emoji"
+	"emoji",
+	"yt-dlp"
 ]
 
 resources = [
