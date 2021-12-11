@@ -32,6 +32,8 @@ def main(packagename,test=False):
 			with open(rml, "r") as fh:
 			    long_description = fh.read()
 			break
+	else:
+		long_description = ""
 
 	setuptools.setup(
 	    name=pkginfo.get("links",{}).get("pypi") or pkginfo["name"],
