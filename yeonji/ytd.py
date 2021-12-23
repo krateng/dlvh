@@ -11,7 +11,7 @@ configfiles = ["ytd.yml","ytd.yaml",".ytd"]
 processname = "yt-dlp"
 
 @mainfunction({'p':'preset','n':'new'},shield=True)
-def main(url=None,preset=None,new=None):
+def main(url=None,preset=None,new=None,**additionals):
 	if new is None and url is not None:
 
 		# no preset, dl here
@@ -74,6 +74,8 @@ def main(url=None,preset=None,new=None):
 
 		os.chdir(folder)
 
+		# add command-supplied options
+		options = {**options,**additionals}
 
 	#	print("The following options have been loaded from local configuration:")
 	#	for o in options:
