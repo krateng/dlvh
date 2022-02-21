@@ -2,6 +2,12 @@
 
 dlvh (**d**own**l**oad **v**ideo **h**ere) is a wrapper for [yt-dlp](https://github.com/yt-dlp/yt-dlp) that allows you to quickly download videos in a folder according to predefined nested local rules.
 
+## Install
+
+```sh
+	pip install dlvh
+```
+
 ## How to use
 
 Use `dlvh *URL*` to download to current folder, `dlvh -p *preset* *URL*` to download to a preset, and `dlvh -n *preset*` (in the target directory) to define new preset.
@@ -23,14 +29,14 @@ Let's say you have the following folder structure:
 
 ```
 ├── audio  
-│   ├── `dlvh.yml` # `extract-audio`  
+│   ├── dlvh.yml # `extract-audio`  
 │   ├── unsettling_screaming  
 │   └── calm_nature_sounds  
 └── video  
-    ├── `dlvh.yml` # `embed-thumbnail`, `download-archive: .ytdlarchive`  
+    ├── dlvh.yml # `embed-thumbnail`, `download-archive: .ytdlarchive`  
     ├── asmr  
     └── dance_covers  
-        ├── `dlvh.yml` # `download-archive: ^ytdlarchive`  
+        ├── dlvh.yml # `download-archive: ^ytdlarchive`  
         ├── twice  
         └── redvelvet  
 ```
