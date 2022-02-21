@@ -86,7 +86,7 @@ def download_vid(url,additionals,preset):
 	# add command-supplied options
 	options = {**options,**additionals}
 
-	print("The following options have been loaded:")
+	print("[dlvh] The following options have been loaded:")
 	for o in options:
 		print("\t",col['magenta'](o),options[o])
 	for f in flags:

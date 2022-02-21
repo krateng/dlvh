@@ -1,6 +1,6 @@
 # dlvh
 
-dlvh (**d**own**l**oad **v**ideo **h**ere) is a wrapper for yt-dlp that allows you to quickly download videos in a folder according to predefined nested local rules.
+dlvh (**d**own**l**oad **v**ideo **h**ere) is a wrapper for [yt-dlp](https://github.com/yt-dlp/yt-dlp) that allows you to quickly download videos in a folder according to predefined nested local rules.
 
 ## How to use
 
@@ -21,6 +21,7 @@ flags:
 
 Let's say you have the following folder structure:
 
+```
 ├── audio  
 │   ├── `dlvh.yml` # `extract-audio`  
 │   ├── unsettling_screaming  
@@ -32,7 +33,9 @@ Let's say you have the following folder structure:
         ├── `dlvh.yml` # `download-archive: ^ytdlarchive`  
         ├── twice  
         └── redvelvet  
+```
+
 
 When you download something to `audio/calm_nature_sounds`, the flag `extract-audio` from its parent folder will be respected.  
-When you download something to `video/asmr`, the flag `embed-thumbnail` and the option `download-archive: .ytdlarchive` will be respected, meaning a local file `.ytdlarchive` will be used as archive.  
-When you download something to `videos/dance_covers/twice` however, its parent folder's option `download-archive: ^ytdlarchive` overwrites this, meaning a common archive file in the `dance_covers` folder will be used for all subfolders.
+When you download something to `video/asmr`, the flag `embed-thumbnail` and the option `download-archive: .ytdlarchive` will be respected, meaning a local file `video/asmr/.ytdlarchive` will be used as archive.  
+When you download something to `videos/dance_covers/twice` however, its parent folder's option `download-archive: ^ytdlarchive` overwrites this, meaning a common archive file `dance_covers/.ytdlarchive` will be used for all subfolders.
