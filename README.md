@@ -1,12 +1,12 @@
-# ytd
+# dlvh
 
-ytd is a wrapper for yt-dlp that allows you to quickly download videos in a folder according to predefined nested local rules.
+dlvh (*d*own*l*oad *v*ideo *h*ere) is a wrapper for yt-dlp that allows you to quickly download videos in a folder according to predefined nested local rules.
 
 ## How to use
 
-Use `ytd *URL*` to download to current folder, `ytd -p *preset* *URL*` to download to a preset, and `ytd -n *preset*` (in the target directory) to define new preset.
+Use `dlvh *URL*` to download to current folder, `dlvh -p *preset* *URL*` to download to a preset, and `dlvh -n *preset*` (in the target directory) to define new preset.
 
-You can have ytd configuration files on each level of the directory tree. These files use a simple yaml structure:
+You can have dlvh configuration files on each level of the directory tree. These files use a simple yaml structure:
 
 ```yaml
 options:
@@ -22,14 +22,14 @@ flags:
 Let's say you have the following folder structure:
 
 ├── audio
-│   ├── `ytd.yml` # `extract-audio`
+│   ├── `dlvh.yml` # `extract-audio`
 │   ├── unsettling_screaming
 │   └── calm_nature_sounds
 └── video
-    ├── `ytd.yml` # `embed-thumbnail`, `download-archive: .ytdlarchive`
+    ├── `dlvh.yml` # `embed-thumbnail`, `download-archive: .ytdlarchive`
     ├── asmr
     └── dance_covers
-        ├── `ytd.yml` # `download-archive: ^ytdlarchive`
+        ├── `dlvh.yml` # `download-archive: ^ytdlarchive`
         ├── twice
         └── redvelvet
 

@@ -9,8 +9,8 @@ from doreah.io import col
 from appdirs import user_config_dir
 
 
-settingsfile = os.path.join(user_config_dir('ytd'),"presets.yml")
-configfiles = ["ytd.yml","ytd.yaml",".ytd"]
+settingsfile = os.path.join(user_config_dir('dlvh'),"presets.yml")
+configfiles = ["dlvh.yml","dlvh.yaml",".dlvh","ytd.yml","ytd.yaml",".ytd"]
 processname = "yt-dlp"
 
 
@@ -40,11 +40,11 @@ def download_vid(url,additionals,preset):
 		flags = selected.get("flags",[])
 
 
-	print("[ytd] Downloading to directory",folder)
+	print("[dlvh] Downloading to directory",folder)
 
 	# Go up the dir tree for all config files
 	tmpfolder = folder
-	print("[ytd] Reading local settings...")
+	print("[dlvh] Reading local settings...")
 	while True:
 		for c in configfiles:
 			local_configfile = os.path.join(tmpfolder,c)
@@ -68,7 +68,7 @@ def download_vid(url,additionals,preset):
 						loc_flags = localsettings["flags"]
 						flags += loc_flags
 
-					print(f"[ytd]\t{local_configfile}")
+					print(f"[dlvh]\t{local_configfile}")
 
 
 			except FileNotFoundError:
@@ -95,11 +95,11 @@ def download_vid(url,additionals,preset):
 	cmd_options = [item for pair in [(f"--{k}",v) for k,v in options.items()] for item in pair] # what
 	cmd_flags = ["--" + k for k in flags]
 
-	print("[ytd] Issuing command")
+	print("[dlvh] Issuing command")
 	subprocess.run([processname] + cmd_options + cmd_flags + [url])
 
 
-# TODO: ytd flags must all be specifed manually?
+# TODO: yt-dlp flags must all be specifed manually?
 @mainfunction({'p':'preset','n':'new'},shield=True)
 def main(url=None,preset=None,new=None,**additionals):
 

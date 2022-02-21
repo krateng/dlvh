@@ -1,13 +1,13 @@
 [project]
-name = "ytd"
+name = "dlvh"
 version = "1.0.0"
 description = "Context-aware video downloader"
 readme = "./README.md"
 requires-python = ">=3.6"
 license = { file="./LICENSE" }
-authors = [ { name="Johannes Krattenmacher", email="ytd@dev.krateng.ch" } ]
+authors = [ { name="Johannes Krattenmacher", email="dlvh@dev.krateng.ch" } ]
 
-urls.repository = "https://github.com/krateng/ytd"
+urls.repository = "https://github.com/krateng/dlvh"
 
 keywords = ["scripts", "commandline"]
 classifiers = [
@@ -23,7 +23,8 @@ dependencies = [
 ]
 
 [project.scripts]
-ytd = "ytd:main"
+dlvh = "dlvh:main"
+ytd = "dlvh:main" # alias for compatibility
 
 [build-system]
 requires = ["flit_core >=3.2,<4"]
