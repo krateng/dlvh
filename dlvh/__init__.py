@@ -40,7 +40,7 @@ def download_vid(url,additionals,preset):
 		flags = selected.get("flags",[])
 
 
-	print("[dlvh] Downloading to directory",folder)
+	print("[dlvh] Downloading to directory",col['orange'](folder))
 
 	# Go up the dir tree for all config files
 	tmpfolder = folder
@@ -68,7 +68,7 @@ def download_vid(url,additionals,preset):
 						loc_flags = localsettings["flags"]
 						flags += loc_flags
 
-					print(f"[dlvh]\t{local_configfile}")
+					print(f"[dlvh]     {col['yellow'](local_configfile)}")
 
 
 			except FileNotFoundError:
