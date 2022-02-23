@@ -99,6 +99,12 @@ def download_vid(url,additionals,preset):
 	subprocess.run([processname] + cmd_options + cmd_flags + [url])
 
 
+def deprecated_main(*args,**kwargs):
+	print()
+	print(col['red']("This command is deprecated. Please use dlvh in the future."))
+	print()
+	return main(*args,**kwargs)
+
 # TODO: yt-dlp flags must all be specifed manually?
 @mainfunction({'p':'preset','n':'new'},shield=True)
 def main(url=None,preset=None,new=None,**additionals):
