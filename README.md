@@ -18,7 +18,7 @@ You can have dlvh configuration files on each level of the directory tree. These
 options:
   download-archive: .ytdlarchive # Relative to the folder where the download happens
   cookies: ^/yt_cookies.txt # Relative to THIS configuration file, even in subfolders
-  output: '"%(id)s.%(title)s.%(ext)s"' # Careful with quoting strings!
+  output: '%(id)s.%(title)s.%(ext)s'
   merge-output-format: mkv
 flags:
 - restrict-filenames
